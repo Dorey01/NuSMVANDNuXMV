@@ -1,0 +1,15 @@
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\bin\Release\NuSMVANDNuXMV.exe.config
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\bin\Release\NuSMVANDNuXMV.exe
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\bin\Release\NuSMVANDNuXMV.pdb
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\obj\Release\NuSMVANDNuXMV.csproj.AssemblyReference.cache
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\obj\Release\NuSMVANDNuXMV.csproj.SuggestedBindingRedirects.cache
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\obj\Release\MainWindow.baml
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\obj\Release\MainWindow.g.cs
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\obj\Release\App.g.cs
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\obj\Release\NuSMVANDNuXMV_MarkupCompile.cache
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\obj\Release\NuSMVANDNuXMV.g.resources
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\obj\Release\NuSMVANDNuXMV.Properties.Resources.resources
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\obj\Release\NuSMVANDNuXMV.csproj.GenerateResource.cache
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\obj\Release\NuSMVANDNuXMV.csproj.CoreCompileInputs.cache
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\obj\Release\NuSMVANDNuXMV.exe
+C:\Users\manap\Desktop\PLK\Final\NuSMVANDNuXMV\NuSMVANDNuXMV\obj\Release\NuSMVANDNuXMV.pdb
