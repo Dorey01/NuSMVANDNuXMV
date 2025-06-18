@@ -162,10 +162,13 @@ namespace NuXMVRunner
             };
             checkAllButton.Click += async (s, e) =>
             {
+                var results = new Dictionary<string, bool>();
                 foreach (var name in ltlNames)
                 {
-                    await RunLTLCheck(name);
+                    bool result = await RunLTLCheck(name);
+                    results[name] = result;
                 }
+                ShowLTLResults("All", results);
             };
             stackPanel.Children.Add(checkAllButton);
 
@@ -178,7 +181,11 @@ namespace NuXMVRunner
                     Margin = new Thickness(0, 2, 0, 2),
                     Padding = new Thickness(5)
                 };
-                button.Click += async (s, e) => await RunLTLCheck(name);
+                button.Click += async (s, e) =>
+                {
+                    bool result = await RunLTLCheck(name);
+                    ShowLTLResults(name, new Dictionary<string, bool> { { name, result } });
+                };
                 stackPanel.Children.Add(button);
             }
 
@@ -186,7 +193,7 @@ namespace NuXMVRunner
         }
 
         // Проверка LTLSPEC формулы
-        private async Task RunLTLCheck(string name)
+        private async Task<bool> RunLTLCheck(string name)
         {
             string filePath = FilePathTextBox.Text.Trim();
             UpdateLog($"Checking LTL property: {name}\n");
@@ -201,7 +208,7 @@ namespace NuXMVRunner
                 if (!File.Exists(nuxmvPath))
                 {
                     UpdateLog($"Error: nuxmv.exe not found at {nuxmvPath}. Please ensure it is in the nuXmv-2.1.0-win64/bin subdirectory of the application directory.\n");
-                    return;
+                    return false;
                 }
 
                 var processInfo = new ProcessStartInfo
@@ -225,25 +232,67 @@ namespace NuXMVRunner
                     string error = process.StandardError.ReadToEnd();
                     process.WaitForExit();
 
+                    bool isTrue = output.Contains("is true");
+                    bool isFalse = output.Contains("is false");
+
                     if (!string.IsNullOrEmpty(output))
                     {
                         UpdateLog($"\n--- Output for {name} ---\n" + output);
-                        ParseTrace(output);
+                        if (isFalse)
+                        {
+                            ParseTrace(output, name);
+                        }
                     }
                     if (!string.IsNullOrEmpty(error))
                     {
                         UpdateLog($"\n--- Errors for {name} ---\n" + error);
                     }
+
+                    return isTrue && !isFalse;
                 }
             }
             catch (Exception ex)
             {
                 UpdateLog($"Error: {ex.Message}\n");
+                return false;
             }
         }
 
+        // Отображение результатов проверки LTL
+        private void ShowLTLResults(string title, Dictionary<string, bool> results)
+        {
+            var window = new Window
+            {
+                Title = $"LTL Check Results - {title}",
+                Width = 400,
+                Height = 300,
+                Content = new ScrollViewer
+                {
+                    Content = new StackPanel
+                    {
+                        Margin = new Thickness(10)
+                    }
+                }
+            };
+
+            var stackPanel = (StackPanel)((ScrollViewer)window.Content).Content;
+
+            foreach (var result in results)
+            {
+                var label = new TextBlock
+                {
+                    Text = $"{result.Key}: {(result.Value ? "True" : "False")}",
+                    Margin = new Thickness(0, 5, 0, 5),
+                    Foreground = result.Value ? Brushes.Green : Brushes.Red
+                };
+                stackPanel.Children.Add(label);
+            }
+
+            window.Show();
+        }
+
         // Парсинг трассировки
-        private void ParseTrace(string output)
+        private void ParseTrace(string output, string propertyName)
         {
             traceData.Clear();
             variables.Clear();
@@ -299,17 +348,17 @@ namespace NuXMVRunner
 
             if (traceData.Any())
             {
-                DisplayTrace();
+                DisplayTrace(propertyName);
             }
         }
 
         // Отображение трассировки
-        private void DisplayTrace()
+        private void DisplayTrace(string propertyName)
         {
             // Первая таблица: исходные данные с пропусками
             var originalWindow = new Window
             {
-                Title = "Trace Viewer (Original)",
+                Title = $"{propertyName} - Trace Viewer (Original)",
                 Width = 800,
                 Height = 400
             };
@@ -325,7 +374,7 @@ namespace NuXMVRunner
             // Вторая таблица: заполненные данные
             var filledWindow = new Window
             {
-                Title = "Trace Viewer (Filled)",
+                Title = $"{propertyName} - Trace Viewer (Filled)",
                 Width = 800,
                 Height = 400
             };
